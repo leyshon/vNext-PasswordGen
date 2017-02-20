@@ -1,0 +1,121 @@
+{
+  "id": "cc659880-a73e-11e6-94fa-25535c3352ae",
+  "name": "AzureNewPassword",
+  "friendlyName": "Azure New Password",
+  "description": "Generates a new password and stores it in an Azure Key Vault",
+  "author": "Michael Leyshon",
+  "helpMarkDown": "Replace with markdown to show in help",
+  "category": "Deploy",
+  "visibility": [
+    "Deploy"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "18",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "AzureNewPassword $(message)",
+  "inputs": [
+    {
+      "name": "ConnectedServiceNameSelector",
+      "type": "pickList",
+      "label": "Azure Connection Type",
+      "required": false,
+      "helpMarkDown": "",
+      "defaultValue": "ConnectedServiceName",
+      "options": {
+          "ConnectedServiceName": "Azure Classic",
+          "ConnectedServiceNameARM": "Azure Resource Manager"
+      }
+    },
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:Azure",
+      "label": "Azure Classic Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Azure Classic subscription to target for copying the files.",
+      "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceName"
+    },
+    {
+      "name": "ConnectedServiceNameARM",
+      "type": "connectedService:AzureRM",
+      "label": "Azure RM Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Azure Resource Manager subscription to target for copying the files.",
+      "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceNameARM"
+    },    
+    {
+      "name": "SecretName",
+      "type": "string",
+      "label": "Secret Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the secret you wish to create"
+    },    
+    {
+      "name": "Username",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The username for the password being generated"
+    },
+    {
+      "name": "VaultName",
+      "type": "string",
+      "label": "Key Vault Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The name of the Azure Key Vault in which to store the secret"
+    },
+    {
+      "name": "PasswordLength",
+      "type": "string",
+      "label": "Password Length",
+      "defaultValue": "32",
+      "required": true,
+      "helpMarkDown": "The length of the auto-generated password"
+    },
+    {
+      "name": "Numeric",
+      "type": "boolean",
+      "label": "Include numeric values in password",
+      "required": true,
+      "defaultValue": true,
+      "helpmarkDown": "Select this option to include numeric values in the auto-generated password"
+    },
+    {
+      "name": "Symbols",
+      "type": "boolean",
+      "label": "Include symbols in password",
+      "required": true,
+      "defaultValue": true,
+      "helpmarkDown": "Select this option to include symbols in the auto-generated password"
+    },
+    {
+      "name": "Upper",
+      "type": "boolean",
+      "label": "Include upper-case in password",
+      "required": true,
+      "defaultValue": true,
+      "helpmarkDown": "Select this option to include upper-case characters in the auto-generated password"
+    },
+    {
+      "name": "Lower",
+      "type": "boolean",
+      "label": "Include lower-case in password",
+      "required": true,
+      "defaultValue": true,
+      "helpmarkDown": "Select this option to include lower-case characters in the auto-generated password"
+    }    
+  ],
+  "execution": {
+    "PowerShell3": {
+      "target": "AzureNewPassword.ps1"
+    }
+  }
+}
